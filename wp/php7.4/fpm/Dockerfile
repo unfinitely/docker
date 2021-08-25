@@ -1,4 +1,4 @@
-FROM wordpress:php7.3-fpm
+FROM wordpress:php7.4-fpm
 
 LABEL org.opencontainers.image.source https://github.com/unfinitely/docker
 LABEL org.opencontainers.image.vendor Unfinitely

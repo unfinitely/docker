@@ -1,6 +1,6 @@
 # Docker Image
 
-[![GitHub license](https://img.shields.io/github/license/unfinitely/docker)](https://github.com/unfinitely/docker/blob/main/LICENSE)
+[![php](https://github.com/unfinitely/docker/actions/workflows/php.yml/badge.svg)](https://github.com/unfinitely/docker/actions/workflows/php.yml) [![wp](https://github.com/unfinitely/docker/actions/workflows/wp.yml/badge.svg)](https://github.com/unfinitely/docker/actions/workflows/wp.yml) [![GitHub license](https://img.shields.io/github/license/unfinitely/docker)](https://github.com/unfinitely/docker/blob/main/LICENSE)
 
 > A collection of [Docker](https://www.docker.com/) image for spinning-up local development environment.
 
@@ -8,10 +8,15 @@
 
 Each of these Docker image provides the following stacks that (I think) would commonly be needed on development.
 
-| Image | Composer | Git | Subversion | WP-CLI | Mailhog | PHP `redis` | PHP `xdebug` |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `php` | ✅ | ✅ | - | - | ✅ | ✅ | ✅ |
-| `wp` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Stack | `php` | `wp` |
+| --- | --- | --- |
+| Composer | ✅ | ✅ |
+| Git | ✅ | ✅ |
+| Subversion | - | ✅ |
+| WP-CLI | - | ✅ |
+| Mailhog | ✅ | ✅ |
+| PHP `redis` | ✅ | ✅ |
+| PHP `xdebug` | ✅ | ✅ |
 
 ## Usage
 

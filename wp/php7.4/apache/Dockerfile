@@ -1,4 +1,4 @@
-FROM wordpress:php7.3-apache
+FROM wordpress:php7.4-apache
 
 LABEL org.opencontainers.image.source https://github.com/unfinitely/docker
 LABEL org.opencontainers.image.vendor Unfinitely

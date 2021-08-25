@@ -1,7 +1,8 @@
-FROM php:7.4-apache
+FROM php:8.0-apache
 
 LABEL org.opencontainers.image.source https://github.com/unfinitely/docker
 LABEL org.opencontainers.image.vendor Unfinitely
+LABEL org.opencontainers.image.description "Image container to run development environment with PHP & Apache"
 
 # Install extra packages
 RUN set -ex; \

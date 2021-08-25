@@ -6,18 +6,18 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/*.yml'
-      - 'wp/**/Dockerfile'
+      - .github/workflows/*.yml
+      - wp/**/Dockerfile
+
+env:
+  LATEST_PHP: '8.0'
+  LATEST_VARIANT: 'apache'
 
 jobs:
 
-  wp:
-    name: Build PHP Image
+  build:
+    name: Build
     runs-on: ubuntu-latest
-
-    env:
-      LATEST_PHP: '8.0'
-      LATEST_VARIANT: 'apache'
 
     strategy:
       fail-fast: true
@@ -39,6 +39,9 @@ jobs:
           docker build --pull --no-cache --tag $imageTag .;
           echo ::set-output name=tag::${imageTag};
         working-directory: wp/php${{ matrix.php }}/${{ matrix.variant }}
+
+      - name: Digest image
+        run: echo ${{ steps.build-image.outputs.digest }}
 
       - name: Run image
         run: |

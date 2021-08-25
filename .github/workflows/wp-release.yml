@@ -1,0 +1,37 @@
+name: wp-release
+
+on:
+  push:
+    branches: ['main']
+
+env:
+  IMAGE_REGISTRY: ghcr.io
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: ['7.3', '7.4', '8.0']
+        variant: ['fpm', 'apache']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log-in to the registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.TOKEN_PACKAGE }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./wp/php${{ matrix.php }}/${{ matrix.variant }}
+          push: true
+          tags: ${{ github.repository_owner }}/wp:php${{ matrix.php }}-${{ matrix.variant }}

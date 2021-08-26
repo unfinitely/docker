@@ -3,6 +3,9 @@ name: wp-release
 on:
   push:
     branches: ['main']
+    paths:
+      - .github/workflows/*.yml
+      - wp/**/Dockerfile
 
 env:
   IMAGE_REGISTRY: ghcr.io

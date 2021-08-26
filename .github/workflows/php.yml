@@ -1,17 +1,23 @@
 name: php
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/php.yml
+      - php/**/Dockerfile
+
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
     branches:
       - main
     paths:
-      - .github/workflows/*.yml
+      - .github/workflows/php.yml
       - php/**/Dockerfile
 
 env:
-  LATEST_PHP: '8.0'
-  LATEST_VARIANT: 'apache'
+  IMAGE_REGISTRY: ghcr.io
 
 jobs:
 
@@ -42,9 +48,8 @@ jobs:
       - name: Digest image
         run: echo ${{ steps.build-image.outputs.digest }}
 
-      - name: Run image
+      - name: Test run image
         run: |
-          docker images
           phpVersion=$(docker run --rm ${{ steps.build-image.outputs.tag }} php -v | grep -o '^PHP [0-9]\.[0-9]');
           if [ "$phpVersion" == "PHP ${{ matrix.php }}" ];
           then
@@ -52,3 +57,9 @@ jobs:
           else
             exit 1;
           fi
+
+      - name: Push image
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          echo "${{ secrets.TOKEN_PACKAGE }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker push ${{ steps.build-image.outputs.tag }}

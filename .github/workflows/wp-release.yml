@@ -3,6 +3,9 @@ name: wp-release
 on:
   push:
     branches: ['main']
+    paths:
+      - .github/workflows/*.yml
+      - wp/**/Dockerfile
 
 env:
   IMAGE_REGISTRY: ghcr.io
@@ -34,4 +37,4 @@ jobs:
         with:
           context: ./wp/php${{ matrix.php }}/${{ matrix.variant }}
           push: true
-          tags: ${{ github.repository_owner }}/wp:php${{ matrix.php }}-${{ matrix.variant }}
+          tags: ${{ env.IMAGE_REGISTRY }}/${{ github.repository_owner }}/wp:php${{ matrix.php }}-${{ matrix.variant }}

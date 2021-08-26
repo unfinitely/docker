@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   push:
     branches: ['main']
+    paths:
+      - .github/workflows/*.yml
+      - php/**/Dockerfile
 
 env:
   IMAGE_REGISTRY: ghcr.io
@@ -35,4 +38,4 @@ jobs:
         with:
           context: ./php/${{ matrix.php }}/${{ matrix.variant }}
           push: true
-          tags: ${{ github.repository_owner }}/php:${{ matrix.php }}-${{ matrix.variant }}
+          tags: ${{ env.IMAGE_REGISTRY }}/${{ github.repository_owner }}/php:${{ matrix.php }}-${{ matrix.variant }}

@@ -2,7 +2,7 @@ FROM php:7.3-apache
 
 LABEL org.opencontainers.image.source https://github.com/unfinitely/docker
 LABEL org.opencontainers.image.vendor Unfinitely
-LABEL org.opencontainers.image.description "Image container to run development environment with PHP & Apache"
+LABEL org.opencontainers.image.description "Image to run development environment with PHP"
 
 # Install extra packages
 RUN set -ex; \

@@ -20,4 +20,4 @@ Each of these Docker image provides the following stacks that (I think) would co
 
 ## Usage
 
-The image is available in [DockerHub](https://hub.docker.com/), and you can run `docker pull unfinitely/php:7.3-apache` command to pull the image for WordPress that runs on PHP 7.3 with Apache or `docker pull unfinitely/php:7.3-fpm` to pull in the FPM variant that can be used with Nginx. Take a look at the [Wiki](https://github.com/unfinitely/docker/wiki) for a more real-world use cases of these images.
+The image is available in [Github Package Registry](https://github.com/unfinitely/docker/pkgs/container/php), and you can run, for example, `docker pull ghcr.io/unfinitely/wp:8.0-apache` command to pull the image for WordPress that runs on PHP 8.0 with Apache or `docker pull ghcr.io/unfinitely/wp:8.0-fpm` to pull in the FPM variant that can be used with Nginx. Take a look at the [Wiki](https://github.com/unfinitely/docker/wiki) for a more real-world use cases of these images.

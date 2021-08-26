@@ -2,6 +2,7 @@ FROM wordpress:php8.0-fpm
 
 LABEL org.opencontainers.image.source https://github.com/unfinitely/docker
 LABEL org.opencontainers.image.vendor Unfinitely
+LABEL org.opencontainers.image.description "Image to run WordPress development environment"
 
 # Install extra packages
 RUN set -ex; \

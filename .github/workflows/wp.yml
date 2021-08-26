@@ -1,6 +1,12 @@
 name: wp
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/*.yml
+      - wp/**/Dockerfile
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
     branches:
@@ -10,6 +16,7 @@ on:
       - wp/**/Dockerfile
 
 env:
+  IMAGE_REGISTRY: ghcr.io
   LATEST_PHP: '8.0'
   LATEST_VARIANT: 'apache'
 
@@ -25,6 +32,9 @@ jobs:
         php: ['7.3', '7.4', '8.0']
         variant: ['fpm', 'apache']
 
+    outputs:
+      image-tag: ${{ steps.build-image.outputs.tag }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -35,7 +45,7 @@ jobs:
       - name: Build image
         id: build-image
         run: |
-          imageTag=${{ github.repository_owner }}/wp:php${{ matrix.php }}-${{ matrix.variant }};
+          imageTag=${{ env.IMAGE_REGISTRY }}/${{ github.repository_owner }}/wp:php${{ matrix.php }}-${{ matrix.variant }};
           docker build --pull --no-cache --tag $imageTag .;
           echo ::set-output name=tag::${imageTag};
         working-directory: wp/php${{ matrix.php }}/${{ matrix.variant }}
@@ -43,7 +53,7 @@ jobs:
       - name: Digest image
         run: echo ${{ steps.build-image.outputs.digest }}
 
-      - name: Run image
+      - name: Test run image
         run: |
           docker images
           phpVersion=$(docker run --rm ${{ steps.build-image.outputs.tag }} php -v | grep -o '^PHP [0-9]\.[0-9]');
@@ -53,3 +63,13 @@ jobs:
           else
             exit 1;
           fi
+
+  release:
+   name: Release
+   runs-on: ubuntu-latest
+   needs: build
+
+   steps:
+      - run: |
+          echo ${{ needs.build.outputs.image-tag }}
+          docker images

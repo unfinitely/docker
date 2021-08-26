@@ -32,15 +32,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN_PACKAGE }}
 
-      - name: Extract image meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: ${{ env.IMAGE_REGISTRY }}/${{ github.repository_owner }}
-
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:
           context: ./wp/php${{ matrix.php }}/${{ matrix.variant }}
           push: true
-          tags: ${{ github.repository_owner }}/wp:php${{ matrix.php }}-${{ matrix.variant }}
+          tags: ${{ env.IMAGE_REGISTRY }}/${{ github.repository_owner }}/wp:php${{ matrix.php }}-${{ matrix.variant }}
